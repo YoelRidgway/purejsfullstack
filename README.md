@@ -48,7 +48,8 @@ I will make this better in the future but for now I will just list all the eleme
 > I have added node_modules of both the backend and the frontend containers into an anonymous volume to avoid copying of node_modules into local filesystem (can cause issues with permissions when deleting also). However, it should be noted that empty node_modules will be created when running the containers. These can be safely ignored or deleted but will keep being created each time.
 #### ports:
 > Ports are all paremetrised internally as well as externally rather than being hard coded. Also the ports on the inside of a container is the same as the outside. The reason for this is to allow for the ports to be parametrised when not running with Docker. However, in order to do this, .env files will need to be made in each of the services/components (backend, frontend). Currently there is a root level .env file that helps the whole thing connect together without having to manually connect the backend port with the frontend.
-
+#### environment vairables
+> Given that there is a root .env file that works accross the backend and the frontend, if running without docker or on seperate machines, the variables will have to be seperatly added in the backend and the frontend modules. All environment variables are also made to be mandatory in the docker compose files.
 
 ## Architecture
 This diagram is a bit useless and overcomplicates things but I spent time making it so keeping it here lol
