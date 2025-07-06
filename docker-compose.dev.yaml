@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    volumes:
+      - ./frontend:/app/ # bind application for instant reload
+      - /app/node_modules # avoid sending node modules from container to local
+    environment:
+      - BACKEND_LOCATION=http://backend:${BACKEND_PORT?}
+      - FRONTEND_PORT=${FRONTEND_PORT?}
+      - FRONTEND_VAR=${FRONTEND_VAR?}
+    ports:
+      - "${FRONTEND_PORT?}:${FRONTEND_PORT?}"
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app/ # bind application for instant reload
+      - /app/node_modules # avoid sending node modules from container to local
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT?}
+      - BACKEND_VAR=${BACKEND_VAR?}
+    ports:
+      - "${BACKEND_PORT?}:${BACKEND_PORT?}"
+    command: ["npm", "run", "dev"]

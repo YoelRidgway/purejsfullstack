@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    environment:
+      - BACKEND_LOCATION=http://backend:${BACKEND_PORT?}
+      - FRONTEND_PORT=${FRONTEND_PORT?}
+      - FRONTEND_VAR=${FRONTEND_VAR?}
+    ports:
+      - "${FRONTEND_PORT?}:${FRONTEND_PORT?}"
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT?}
+      - BACKEND_VAR=${BACKEND_VAR?}
+    ports:
+      - "${BACKEND_PORT?}:${BACKEND_PORT?}"
+    command: ["npm", "start"]
